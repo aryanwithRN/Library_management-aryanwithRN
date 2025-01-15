@@ -1,0 +1,66 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+</head>
+<body>
+    <section class="account-section">
+        <h2>My Borrowed Books</h2>
+        <p style="text-align:center">Click on book Cover to read book</p>
+        {% if user_books %}
+        <table class="borrowed-books-table">
+            <thead>
+                <tr>
+                    <th>Book Cover</th>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Borrowed Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user_book in user_books %}
+                <tr>
+                    <td>
+                        {% if user_book.book.pdf_file %}
+                            <a href="{{ user_book.book.pdf_file.url }}" target="_blank">
+                                <img src="{{ user_book.book.cover_image.url }}" alt="{{ user_book.book.title }}" class="cover-image">
+                            </a>
+                        {% else %}
+                            <img src="{{ user_book.book.cover_image.url }}" alt="{{ user_book.book.title }}" class="cover-image">
+                        {% endif %}
+                    </td>
+                    <td>{{ user_book.book.title }}</td>
+                    <td>{{ user_book.book.author }}</td>
+                    <td>{{ user_book.book.genre }}</td>
+                    <td>{{ user_book.borrowed_date|date:'Y-m-d' }}</td>
+                    <td>{{ user_book.due_date|date:'Y-m-d' }}</td>
+                    <td>
+                        {% if user_book.due_date < now %}
+                        <span class="overdue">Overdue</span>
+                        {% else %}
+                        <span class="borrowed">Borrowed</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'return_book' user_book.id %}" class="btn-return">Return Book</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No books borrowed yet.</p>
+        {% endif %}
+        <a href="{% url 'home' %}" class="btn-back-home"><i class="fa fa-home"></i> Back to Home</a>
+    </section>
+</body>
+</html>

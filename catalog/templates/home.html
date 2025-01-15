@@ -1,0 +1,39 @@
+{% include "navbar.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Library</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search_sort.css' %}">
+</head>
+<body>
+    <section class="books-section">
+        <h2>Books in store</h2>
+        <div class="search-container">
+            <form action="{% url 'search_books' %}" method="GET">
+                <input type="text" name="q" placeholder="Search books...">
+                <button type="submit">Search</button>
+            </form>
+            <div class="sorting-buttons">
+                <a href="?sort=az" class="btn-sort">Sort A-Z</a>
+                <a href="?sort=za" class="btn-sort">Sort Z-A</a>
+            </div>
+        </div>
+        <div class="book-container" >
+            {% for book in books %}
+            <div class="book" onclick="window.location.href='{% url "confirm_borrow" book.id %}'"> 
+                <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+                {% if book.count > 0 %}
+                <a href="{% url 'confirm_borrow' book.id %}" class="btn-borrow">Borrow</a>
+                {% else %}
+                <p class="out-of-stock">Out of stock</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

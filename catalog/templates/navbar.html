@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Station</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="{% url 'home' %}">Welcome, {{ user.username }}</a>
+            </div>
+            <div class="navbar-links">
+                    <a href="{% url 'account' %}">Account</a>
+                    
+                    <a href="{% url 'index' %}" class="navbar-logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

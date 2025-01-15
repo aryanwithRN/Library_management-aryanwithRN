@@ -1,0 +1,33 @@
+{%include 'bg.html'%}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
+<div class="container">
+    <div class="form_area">
+        <p class="title">SIGN UP</p>
+        <form method="post">
+            {%csrf_token%}
+            <div class="form_group">
+                <label class="sub_title" for="name">Username</label>
+                <input placeholder="Enter Username" name="username" class="form_style" type="text">
+            </div>
+            <div class="form_group">
+                <label class="sub_title" for="email">Email</label>
+                <input placeholder="Enter your email" name="email" id="email" class="form_style" type="email">
+            </div>
+            <div class="form_group">
+                <label class="sub_title" for="password">Password</label>
+                <input placeholder="Enter your password" name="password" id="password" class="form_style" type="password">
+            </div>
+            <div class="form_group">
+                <label class="sub_title" for="password">Confirm Password</label>
+                <input placeholder="Enter Confirm password" name="password1" id="password" class="form_style" type="password">
+            </div>
+            <div>
+                <button class="btn" type="submit" >SIGN UP</button>
+                <p>Have an Account? <a class="link" href="{%url 'login'%}">Login Here!</a></p>
+            </div>
+        
+        </form>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Book</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/return_book.css' %}">
+</head>
+<body>
+    <section class="return-book-section">
+        <h2>Return Book</h2>
+        <div class="book-info">
+            <div class="book-image">
+                <img src="{{ user_book.book.cover_image.url }}" alt="{{ user_book.book.title }}">
+            </div>
+            <div class="book-details">
+                <h3>{{ user_book.book.title }}</h3>
+                <p><b>Author:</b> {{ user_book.book.author }}</p>
+                <p><b>Genre:</b> {{ user_book.book.genre }}</p>
+                <p><b>Borrowed Date:</b> {{ user_book.borrowed_date|date:'Y-m-d' }}</p>
+                <p><b>Due Date:</b> {{ user_book.due_date|date:'Y-m-d' }}</p>
+                <p><b>Current Date:</b> {{ now|date:'Y-m-d' }}</p>
+                <p><b>Days Borrowed:</b> {{ days_borrowed }}</p>
+                {% if days_overdue > 0 %}
+                    <p>Days Overdue: {{ days_overdue }}</p>
+                    <p>Fine: ₹{{ fine }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-return">Return Book</button>
+        </form>
+        <a href="{% url 'account' %}" class="btn-back-account">Back to Account</a>
+    </section>
+</body>
+</html>

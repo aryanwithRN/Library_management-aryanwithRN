@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto; /* Center the container */
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 100px); /* Adjust width for responsiveness */
+            max-width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            font-size: 16px; /* Improved readability */
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #0056b3; /* Updated primary button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #003d80; /* Darker shade on hover */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px; /* Space between search form and results */
+        }
+        .book-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .book-container:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced hover effect */
+        }
+        .book-info {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+        .book-info img {
+            max-width: 100px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .book-details {
+            flex: 1;
+        }
+        .book-details h3 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .book-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .btn-borrow {
+            padding: 8px 16px;
+            background-color: #6d706e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .btn-borrow:hover {
+            background-color: #a5a5a5;
+        }
+        .btn-back {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #606060;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px; /* Increased space from search form */
+            display: block; /* Ensures full width */
+            width: fit-content; /* Adjusts width based on content */
+        }
+        .btn-back i {
+            margin-right: 5px;
+        }
+        .btn-back:hover {
+            background-color: #003d80; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back button and search form -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'home' %}" class="btn-back"><i class="fas fa-home"></i> Back to Home</a>
+        {% else %}
+        <a href="{% url 'index' %}" class="btn-back"><i class="fas fa-home"></i> Home</a>
+        {%endif%}
+            <h1>Search Results</h1>
+        
+        <form action="{% url 'search_books' %}" method="GET">
+            <input type="text" name="q" placeholder="Search books...">
+            <button type="submit"><i class="fas fa-search"></i> Search</button>
+        </form>
+        
+        {% if query %}
+            <!-- If there's a search query -->
+            <h2>Search results for "{{ query }}"</h2>
+            {% if results %}
+                <!-- If there are search results -->
+                <ul>
+                    {% for book in results %}
+                        <!-- Book container -->
+                        <li>
+                            <div class="book-container">
+                                <div class="book-info">
+                                    <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+                                    <div class="book-details">
+                                        <h3>{{ book.title }}</h3>
+                                        <p><b>Genre:</b> {{ book.genre }}</p>
+                                        <p><b>Author:</b> {{ book.author }}</p>
+                                        <p><b>Copies Available:</b> {{ book.count }}</p>
+                                        <!-- Add more book details as needed -->
+                                    </div>
+                                    <div class="btn-container">
+                                        {% if user.is_authenticated %}
+                                            {% if book.count > 0 %}
+                                                <a href="{% url 'confirm_borrow' book.id %}" class="btn-borrow">Borrow</a>
+                                            {% else %}
+                                                <p class="out-of-stock">Out of stock</p>
+                                            {% endif %}
+                                        {% else %}
+                                            <a href="{% url 'login' %}" class="btn-borrow">Login to Borrow</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <!-- No search results message -->
+                <p>No results found.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

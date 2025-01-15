@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Library Landing Page</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <span class="library-name" style="color: rgba(21, 22, 26, 0.996);">ReadZone</span>
+        </div>
+        <div class="navbar-right">
+            <a href="{%url 'about'%}">About</a>
+            <a href="/login">Login</a>
+            <a href="/signup">Sign Up</a>
+            
+        </div>
+    </nav>
+    <form action="{% url 'search_books' %}" method="GET" class="search-form">
+        <input type="text" name="q" placeholder="Search books">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <!-- Book Grid -->
+     <h2 style="margin-left: 45%;">Available Book</h2>
+    <div class="book-grid">
+        {% for book in books %}
+        {% if book.count > 0 %}
+        <div class="book-item" onclick="window.location.href='login'">
+            
+            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="book-cover">
+            <div class="book-info">
+                <h3 class="book-title">{{ book.title }}</h3>
+                <p class="book-author">by, {{ book.author }}</p>
+            </div>
+            <button class="borrow-button">Borrow</button>
+        </div>
+        {%endif%}
+        {% endfor %}
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 ReadZone. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

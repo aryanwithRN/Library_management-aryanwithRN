@@ -1,0 +1,38 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Borrow</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/confirm_borrow.css' %}">
+</head>
+<body>
+    <section class="confirm-borrow-section">
+        <h2>Borrowing Book This ?</h2>
+        <div class="container">
+            <div class="book-info">
+                <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+                <div class="info-container">
+                    <h3>{{ book.title }}</h3>
+                    <p><b>Author:</b> {{ book.author }}</p>
+                    <p><b>Genre:</b> {{ book.genre }}</p>
+                    <p><b>Copies Available:</b> {{ book.count }}</p>
+                    <p><b>Borrowing Date:</b> {{ borrowed_date|date:'d-m-Y' }}</p>
+                    <p><b>Due Date Will be:</b> {{ due_date|date:'d-m-Y' }}</p>
+                    <p><b>Note:</b> You will be fined 29 rupees per day for late return.</p>
+                </div>
+            </div>
+            <div class="btn-container">
+                <form method="post" action="{% url 'borrow_book' book.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-confirm">Confirm Borrow</button>
+                </form>
+                <a href="{% url 'home' %}" class="btn-cancel">Cancel</a>
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>

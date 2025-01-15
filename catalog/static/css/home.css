@@ -1,0 +1,134 @@
+/* Existing CSS */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    /* Background image properties */
+    background-image: url("/static/images/2bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Section styles */
+.books-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+/* Heading styles */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Book container styles */
+.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Center items horizontally */
+}
+
+/* Book styles */
+.book {
+    cursor: pointer; /* Added cursor style */
+    width: 220px; /* Adjust as needed */
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensure Borrow button stays inside */
+    position: relative; /* Position Borrow button */
+}
+
+/* Book image styles */
+.book img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0; /* Rounded corners only on top */
+}
+
+/* Book info styles */
+.book-info {
+    padding: 10px;
+}
+
+/* Book title styles */
+.book h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Book details paragraph styles */
+.book p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Borrow button styles */
+.btn-borrow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-top: 1px;
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    border-radius: 0 0 5px 5px; /* Rounded corners only on bottom */
+    background-color: #555555;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-borrow:hover {
+    background-color: #0056b3;
+}
+
+/* Out of stock message styles */
+.out-of-stock {
+    text-align: center;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Search container styles */
+.search-container {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    margin-bottom: 20px;
+}
+
+/* Search box styles */
+.search-box {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* Search button styles */
+.search-btn {
+    padding: 8px 16px;
+    background-color: #656e78;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}

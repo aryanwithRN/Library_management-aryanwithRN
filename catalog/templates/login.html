@@ -1,0 +1,42 @@
+{% load static %}
+{% load socialaccount %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<div class="container">
+    <a href="{% url 'index' %}" class="btn-back"><i class="fas fa-home"></i> Back to Home</a>
+    <div class="form_area">
+        <p class="title"><i class="fas fa-user-circle"></i> Login</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form_group">
+                <label class="sub_title" for="username"><i class="fas fa-user"></i> Username</label>
+                <input placeholder="Enter Username" name="username" id="username" class="form_style" type="text">
+            </div>
+            <div class="form_group">
+                <label class="sub_title" for="password"><i class="fas fa-lock"></i> Password</label>
+                <div class="password-input">
+                    <input placeholder="Enter your password" name="password" id="password" class="form_style" type="password">
+                    <i class="fas fa-eye-slash toggle-password" id="togglePassword"></i>
+                </div>
+            </div>
+            <div>
+                <button class="btn" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <p>Don't Have an Account? <a class="link" href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Signup</a></p>
+                <p>Login with Google? <a class="link google-link" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i> Google</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#togglePassword').on('click', function() {
+            const passwordField = $('#password');
+            const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+            passwordField.attr('type', type);
+            $(this).toggleClass('fa-eye fa-eye-slash');
+        });
+    });
+</script>
