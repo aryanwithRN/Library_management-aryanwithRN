@@ -49,17 +49,19 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': '',
-            'secret': '',
-            'key': '',
-        },
-        'SCOPE': ['profile', 'email'],
-        'AUTH_PARAMS': {'access_type': 'online'},
-    },
-}
+
+# on if you use social auth then just align the api with empty variables.
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'APP': {
+#             'client_id': '',
+#             'secret': '',
+#             'key': '',
+#         },
+#         'SCOPE': ['profile', 'email'],
+#         'AUTH_PARAMS': {'access_type': 'online'},
+#     },
+# }
 
 
 MIDDLEWARE = [
